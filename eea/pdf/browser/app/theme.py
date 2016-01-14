@@ -45,7 +45,9 @@ class ThemeUtils(BrowserView):
         self.request = request
 
     def __call__(self, portal_type, theme, comment=None, depth=1):
-        """
+        """ Set local theme for children of context
+        ex: SITE/set_local_theme?portal_type=Document&theme=default-theme&depth=3
+        would set default-theme for Documents found in context up to the 3rd depth
         :param portal_type: Portal Types to look for when changing theme
         :type portal_type: str
         :param theme: Theme id we want to apply for the given portal_type
