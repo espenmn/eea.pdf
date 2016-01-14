@@ -5,6 +5,7 @@ from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 from eea.pdf.cache.cache import updateContext
 from eea.downloads.interfaces import IStorage
+import transaction
 
 class Theme(BrowserView):
     """ Custom view controller
@@ -31,3 +32,45 @@ class Theme(BrowserView):
             if storage_pdf_obj is not None:
                 updateContext(obj)
         return json.dumps('ok')
+
+
+class ThemeUtils(BrowserView):
+    """ Custom view controller
+    """
+
+    def __init__(self, context, request):
+        super(ThemeUtils, self).__init__(context, request)
+        self.context = context
+        self.request = request
+
+    def __call__(self, portal_type, theme, depth=1):
+        """
+        :param portal_type: Portal Types to look for when changing theme
+        :type portal_type: str
+        :param theme: Theme id we want to apply for the given portal_type
+        :type theme: str
+        :param depth: How far do we want to look for the content from context
+        :type depth: int
+        :return: List of object that had their local theme set
+        :rtype: str
+        """
+        catalog = getToolByName(self.context, 'portal_catalog')
+        folder_path = '/'.join(self.context.getPhysicalPath())
+        search_query = {
+            'Language': 'all',
+            'portal_type': portal_type,
+            'path': {'query': folder_path, 'depth': int(depth)}
+
+        }
+        objs_path = []
+        count = 0
+        for brain in catalog(search_query):
+            obj = brain.getObject()
+            obj_theme = obj.getField('pdfTheme')
+            obj_theme.set(obj, theme)
+            objs_path.append(obj.absolute_url())
+            count += 1
+            if count % 50 == 0:
+                transaction.savepoint(optimistic=True)
+
+        return 'Done setting %s theme for \n %s' % (theme, "\n".join(objs_path))

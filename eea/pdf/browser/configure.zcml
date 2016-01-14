@@ -23,6 +23,14 @@
     permission="cmf.ManagePortal"
     />
 
+    <browser:page
+        for="*"
+        layer="eea.pdf.interfaces.ILayer"
+        name="set_local_theme"
+        class=".app.theme.ThemeUtils"
+        permission="cmf.ManagePortal"
+    />
+
   <browser:page
     for="eea.pdf.interfaces.IPDFTheme"
     layer="eea.pdf.interfaces.ILayer"
