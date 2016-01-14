@@ -1,6 +1,7 @@
 """ Browser views
 """
 import json
+
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 from eea.pdf.cache.cache import updateContext
@@ -43,12 +44,14 @@ class ThemeUtils(BrowserView):
         self.context = context
         self.request = request
 
-    def __call__(self, portal_type, theme, depth=1):
+    def __call__(self, portal_type, theme, comment=None, depth=1):
         """
         :param portal_type: Portal Types to look for when changing theme
         :type portal_type: str
         :param theme: Theme id we want to apply for the given portal_type
         :type theme: str
+        :param comment: Comment added in history comment
+        :type comment: str
         :param depth: How far do we want to look for the content from context
         :type depth: int
         :return: List of object that had their local theme set
@@ -69,6 +72,11 @@ class ThemeUtils(BrowserView):
             obj_theme = obj.getField('pdfTheme')
             obj_theme.set(obj, theme)
             objs_path.append(obj.absolute_url())
+            cmnt = "Migration script version which set Pdf theme to %s." \
+                      % theme
+            cmnt = cmnt + ' ' + comment if comment else cmnt
+            pr = getToolByName(obj, 'portal_repository')
+            pr.save(obj, comment=cmnt)
             count += 1
             if count % 50 == 0:
                 transaction.savepoint(optimistic=True)
