@@ -67,16 +67,24 @@ class ThemeUtils(BrowserView):
         }
         objs_path = []
         count = 0
-        for brain in catalog(search_query):
+        results = catalog(search_query)
+        first_result = results[0].getObject()
+        pr = getToolByName(self.context, 'portal_repository')
+        isVersionable = pr.isVersionable(first_result)
+        should_version = False
+        if pr.supportsPolicy(first_result, 'at_edit_autoversion') \
+                and isVersionable:
+            should_version = True
+        for brain in results:
             obj = brain.getObject()
             obj_theme = obj.getField('pdfTheme')
             obj_theme.set(obj, theme)
             objs_path.append(obj.absolute_url())
-            cmnt = "Migration script version which set Pdf theme to %s." \
-                      % theme
-            cmnt = cmnt + ' ' + comment if comment else cmnt
-            pr = getToolByName(obj, 'portal_repository')
-            pr.save(obj, comment=cmnt)
+            if should_version:
+                cmnt = "Migration script version which set Pdf theme to %s." \
+                          % theme
+                cmnt = cmnt + ' ' + comment if comment else cmnt
+                pr.save(obj, comment=cmnt)
             count += 1
             if count % 50 == 0:
                 transaction.savepoint(optimistic=True)
