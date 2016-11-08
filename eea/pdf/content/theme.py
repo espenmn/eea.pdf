@@ -81,7 +81,7 @@ class IPDFBehavior(form.Schema):
             )
        )
        
-    schema.TextLine(
+    schema.TextLine(	
         default=u'pdf.toc',
         description=_(
                 u"An XSL page template to be used for PDF Table of contents. "
@@ -156,10 +156,6 @@ class IPDFBehavior(form.Schema):
             )
         )
     
-    image = schema.Image(
-        description=_(u"Upload a preview image for this theme")
-        )
-
 
 
 alsoProvides(IPDFBehavior, IFormFieldProvider)

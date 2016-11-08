@@ -2,23 +2,21 @@
 """
 from zope.interface import implementer
 from Products.CMFCore.utils import UniqueObject
-from Products.ATContentTypes.content.folder import ATFolder
+#from Products.ATContentTypes.content.folder import ATFolder
 from eea.pdf.content.interfaces import IPDFTool
-from eea.pdf.content.theme import finalize_schema
+#from eea.pdf.content.theme import finalize_schema
 
-TOOL_SCHEMA = ATFolder.schema.copy()
-finalize_schema(TOOL_SCHEMA)
+#TOOL_SCHEMA = ATFolder.schema.copy()
+#finalize_schema(TOOL_SCHEMA)
+
+from plone.dexterity.interfaces import IDexterityContent
 
 @implementer(IPDFTool)
-class PDFTool(UniqueObject, ATFolder):
+class PDFTool(UniqueObject):
     """ Local utility to store and customize PDF themes
     """
     meta_type = portal_type = 'PDFTool'
-    archetypes_name = 'EEA PDF Tool'
-    manage_options = ATFolder.manage_options
-    schema = TOOL_SCHEMA
-    _at_rename_after_creation = False
-
+    
     def themes(self):
         """ Available themes
         """

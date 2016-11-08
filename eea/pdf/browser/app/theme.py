@@ -10,10 +10,7 @@ from eea.downloads.interfaces import IStorage
 class Theme(BrowserView):
     """ Custom view controller
     """
-    
-    import pdb; pdb.set_trace()
-    
-    
+
     @property
     def types(self):
         """ Types

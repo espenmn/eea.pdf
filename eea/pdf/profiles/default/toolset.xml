@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<tool-setup>
- <required tool_id="portal_pdf"
-  class="eea.pdf.content.tool.PDFTool" />
-</tool-setup>

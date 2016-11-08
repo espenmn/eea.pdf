@@ -4,7 +4,7 @@ from zope.event import notify
 from zope.lifecycleevent import ObjectModifiedEvent
 from Products.GenericSetup.utils import XMLAdapterBase
 from eea.pdf.interfaces import IPDFTheme
-from eea.pdf.content.theme import EditSchema
+#from eea.pdf.content.theme import EditSchema
 
 class PDFThemeXMLAdapter(XMLAdapterBase):
     """ Generic setup import/export xml adapter

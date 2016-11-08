@@ -5,6 +5,7 @@ PDF content interfaces
 
 """
 from zope.interface import Interface
+#from z3c.form import interfaces
 
 class IPDFTool(Interface):
     """
