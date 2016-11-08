@@ -2,9 +2,14 @@
 """
 from zope.component import queryMultiAdapter
 from plone.app.layout.viewlets import common
+#from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+
+
+from plone.app.layout.viewlets.common import ViewletBase
+#from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-class Pdf(common.ViewletBase):
+class Pdf(ViewletBase):
     """ Custom viewlet
     """
     render = ViewPageTemplateFile('../zpt/viewlet.pt')

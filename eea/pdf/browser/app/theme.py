@@ -1,7 +1,8 @@
 """ Browser views
 """
 import json
-from Products.Five.browser import BrowserView
+#from Products.Five.browser import BrowserView
+from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 from eea.pdf.cache.cache import updateContext
 from eea.downloads.interfaces import IStorage
@@ -9,13 +10,17 @@ from eea.downloads.interfaces import IStorage
 class Theme(BrowserView):
     """ Custom view controller
     """
+    
+    import pdb; pdb.set_trace()
+    
+    
     @property
     def types(self):
         """ Types
         """
-        field = self.context.getField('types')
-        types = field.getAccessor(self.context)
-        return types()
+        #field = self.context.getField('types')
+        #types = field.getAccessor(self.context)
+        return 'types()'
 
     def flushPDFsCache(self):
         """ Flush all PDFs cache for this theme

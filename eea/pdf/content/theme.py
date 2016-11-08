@@ -23,11 +23,11 @@ from zope.i18nmessageid import MessageFactory
 
 
 
-class IIPDFBehavior(form.Schema):
+class IPDFBehavior(form.Schema):
     """ A field for icons"""
     
     cover = schema.TextLine(
-        default='pdf.cover',
+        default=u'pdf.cover',
         description=_(
                 u"A page template to be used for PDF Cover. "
                 u"Leave empty to disable it."
@@ -35,7 +35,7 @@ class IIPDFBehavior(form.Schema):
         )
 
     disclaimer = schema.TextLine(
-    	default='pdf.disclaimer',
+    	default=u'pdf.disclaimer',
             description=_(
                 u"A page template to be used for PDF Disclaimer, "
                 u"the first page after PDF cover. "
@@ -44,14 +44,14 @@ class IIPDFBehavior(form.Schema):
         )
     
     body = schema.TextLine(        
-        default='pdf.body',
+        default=u'pdf.body',
         description=_(
                 u"A page template to be used for PDF Body. "
                 u"Leave empty to disable it."
             )
     )
     backcover = schema.TextLine(
-        default='pdf.cover.back',
+        default=u'pdf.cover.back',
         description=_(
                 u"A page template to be used for PDF Back Cover. "
                 u"Leave empty to disable it."
@@ -59,14 +59,14 @@ class IIPDFBehavior(form.Schema):
         )
         
     header = schema.TextLine(        
-        default='pdf.header',
+        default=u'pdf.header',
         description=_(
                 u"A page template to be used for PDF Header. "
                 u"Leave empty to disable it."
             )
         )
     footer = schema.TextLine(        
-        default='pdf.footer',
+        default=u'pdf.footer',
         description=_(
                 u"A page template to be used for PDF Footer. "
                 u"Leave empty to disable it."
@@ -81,8 +81,8 @@ class IIPDFBehavior(form.Schema):
             )
        )
        
-    schema.TextLine('toc',
-        default='pdf.toc',
+    schema.TextLine(
+        default=u'pdf.toc',
         description=_(
                 u"An XSL page template to be used for PDF Table of contents. "
                 u"Leave empty to disable it."
