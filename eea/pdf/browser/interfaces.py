@@ -1,11 +1,6 @@
-""" Browser interfaces
+from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
-   >>> portal = layer['portal']
-   >>> sandbox = portal['sandbox']
 
-"""
-from zope.interface import Interface
-
-class ILayer(Interface):
-    """ Custom layer for this package
-    """
+class ILayer(IDefaultBrowserLayer):
+    """Marker interface that defines a browser layer."""
+    

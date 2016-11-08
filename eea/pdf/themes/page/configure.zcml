@@ -5,7 +5,6 @@
 
   <browser:page
     name="pdf.cover"
-    layer="eea.pdf.interfaces.ILayer"
     for="eea.pdf.interfaces.IPDFAware"
     class=".cover.Cover"
     permission="eea.pdf.download"
