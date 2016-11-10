@@ -5,7 +5,6 @@ from zope import event
 from zope.publisher.interfaces import NotFound
 from zope.component import queryMultiAdapter, queryUtility
 from zope.component.hooks import getSite
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.async.interfaces import IAsyncService
 from eea.converter.browser.app.download import Pdf
 from eea.downloads.interfaces import IStorage
@@ -17,16 +16,18 @@ from eea.converter import async
 logger = logging.getLogger('eea.pdf')
 
 
-class Download(Pdf):
-    """ Download PDF
-    """
-    
-    import pdb; pdb.set_trace()
-    
-    template = ViewPageTemplateFile('../zpt/download.pt')
+#from Acquisition import aq_inner
+
+from Products.Five import BrowserView
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+
+
+
+class MakePdf(Pdf):
+    template = ViewPageTemplateFile('makepdf.pt')
 
     def __init__(self, context, request):
-        super(Download, self).__init__(context, request)
+        super(MakePdf, self).__init__(context, request)
         self._title = ''
         self._message = _(
             u"* The email is only used for the purpose of sending the PDF. "
@@ -208,15 +209,16 @@ class Download(Pdf):
                                     name='pdf.support')
 
         # Check for permission
-        if not getattr(support, 'can_download', lambda: False)():
-            raise NotFound(self.context, self.__name__, self.request)
+        #if not getattr(support, 'can_download', lambda: False)():
+        #    raise NotFound(self.context, self.__name__, self.request)
 
         # Don't download PDF asynchronously
         if not support.async():
             return super(Download, self).__call__(**kwargs)
 
         # We have the email, continue
-        email = getattr(support, 'email', lambda: None)()
+        #email = getattr(support, 'email', lambda: None)()
+        email = 'espen@medialog.no'
         if email:
             return self.download(email, **kwargs)
 
@@ -225,4 +227,4 @@ class Download(Pdf):
             return self.post(**kwargs)
 
         # Ask for email
-        return self._redirect()
+        #return self._redirect()

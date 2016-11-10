@@ -40,6 +40,14 @@
     permission="eea.pdf.download"
     />
 
+  <browser:page
+    name="makepdf"
+    for="*"
+    class=".makepdf.MakePdf"
+    template = "makepdf.pt"
+    permission="zope2.View"
+    />
+
   <browser:viewlet
     name="eea.pdf"
     layer="eea.pdf.interfaces.ILayer"
