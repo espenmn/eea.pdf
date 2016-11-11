@@ -39,7 +39,7 @@ class MakePdf(Pdf):
     def make_pdf(self, dry_run=False, **kwargs):
         """ Compute pdf
         """
-        data = super(Download, self).make_pdf(dry_run=dry_run, **kwargs)
+        data = super(MakePdf, self).make_pdf(dry_run=dry_run, **kwargs)
 
         # Async
         if dry_run:
@@ -97,9 +97,10 @@ class MakePdf(Pdf):
     def link(self):
         """ Download link
         """
-        if not self._link:
-            storage = IStorage(self.context).of('pdf')
-            self._link = storage.absolute_url()
+        #if not self._link:
+        #    storage = IStorage(self.context).of('pdf')
+        #    self._link = storage.absolute_url()
+        self._link = 'localhost:8080/pbbbdf/fgdsg/'
         return self._link
 
     def period(self):
@@ -146,8 +147,8 @@ class MakePdf(Pdf):
         title = self.context.title_or_id()
 
         portal = getSite()
-        from_name = portal.getProperty('email_from_name')
-        from_email = portal.getProperty('email_from_address')
+        from_name = 'Espen'
+        from_email = 'espen@medialog.no'
 
         if fallback or async.file_exists(filepath):
             wrapper = IContextWrapper(self.context)(
@@ -157,7 +158,7 @@ class MakePdf(Pdf):
                 url=url,
                 from_name=from_name,
                 from_email=from_email,
-                title=title
+               title=title
             )
 
             event.notify(AsyncPDFExportSuccess(wrapper))
@@ -207,14 +208,15 @@ class MakePdf(Pdf):
     def __call__(self, **kwargs):
         support = queryMultiAdapter((self.context, self.request),
                                     name='pdf.support')
+        import pdb; pdb.set_trace()
+
 
         # Check for permission
         #if not getattr(support, 'can_download', lambda: False)():
         #    raise NotFound(self.context, self.__name__, self.request)
 
         # Don't download PDF asynchronously
-        if not support.async():
-            return super(Download, self).__call__(**kwargs)
+        return super(MakePdf, self).__call__(**kwargs)
 
         # We have the email, continue
         #email = getattr(support, 'email', lambda: None)()
