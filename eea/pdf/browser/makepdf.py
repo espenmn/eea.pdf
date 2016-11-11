@@ -100,7 +100,7 @@ class MakePdf(Pdf):
         #if not self._link:
         #    storage = IStorage(self.context).of('pdf')
         #    self._link = storage.absolute_url()
-        self._link = 'localhost:8080/pbbbdf/fgdsg/'
+        self._link = 'localhost:8080/pbbbdf/XXXX/'
         return self._link
 
     def period(self):
