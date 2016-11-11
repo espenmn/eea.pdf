@@ -27,6 +27,7 @@ class MakePdf(Pdf):
     template = ViewPageTemplateFile('makepdf.pt')
 
     def __init__(self, context, request):
+        import pdb; pdb.set_trace()
         super(MakePdf, self).__init__(context, request)
         self._title = ''
         self._message = _(
@@ -97,10 +98,9 @@ class MakePdf(Pdf):
     def link(self):
         """ Download link
         """
-        #if not self._link:
-        #    storage = IStorage(self.context).of('pdf')
-        #    self._link = storage.absolute_url()
-        self._link = 'localhost:8080/pbbbdf/XXXX/'
+        if not self._link:
+            storage = IStorage(self.context).of('pdf')
+            self._link = storage.absolute_url()
         return self._link
 
     def period(self):
@@ -206,17 +206,17 @@ class MakePdf(Pdf):
         return self.download(email, **kwargs)
 
     def __call__(self, **kwargs):
-        support = queryMultiAdapter((self.context, self.request),
-                                    name='pdf.support')
         import pdb; pdb.set_trace()
-
+        #support = queryMultiAdapter((self.context, self.request),
+        #                            name='pdf.support')
 
         # Check for permission
         #if not getattr(support, 'can_download', lambda: False)():
         #    raise NotFound(self.context, self.__name__, self.request)
 
         # Don't download PDF asynchronously
-        return super(MakePdf, self).__call__(**kwargs)
+        #if not support.async():
+        #    return super(Download, self).__call__(**kwargs)
 
         # We have the email, continue
         #email = getattr(support, 'email', lambda: None)()
@@ -229,4 +229,4 @@ class MakePdf(Pdf):
             return self.post(**kwargs)
 
         # Ask for email
-        #return self._redirect()
+        return self._redirect()
